@@ -1,0 +1,15 @@
+#Plot 1
+#read data
+library(dplyr)
+data=readRDS("summarySCC_PM25.rds")
+code=readRDS("Source_Classification_Code.rds")
+data=data.table(data)
+code=data.table(code)
+#View(head(data))
+#View(head(code))
+data=group_by(data,year)
+trend=summarize(data,sum(Emissions))
+setnames(trend,c("year","Emissions"))
+plot(trend$year,trend$Emissions,xlab="year",ylab="Emissions",main="Plot 1",type="b",col="red")
+dev.copy(png,file="plot1.png")
+dev.off()
